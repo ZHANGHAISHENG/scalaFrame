@@ -1,0 +1,42 @@
+https://engine.lvehaisen.com/index/activity?
+appKey=hZmYczUX7EBYtjjhc4723G9nrWB
+&adslotId=5848
+&md=H4sIAAAAAAAAAFXPQW7CMBAF0KtUXiPLLcQ07HqMriJjD3SE40G2kwghdpwBbtHCoivu09JbdFJaqVn%2B568Zz1ZgDShm4lFrXU7VuCinRVFOxEigWxgxC433IxEyVzpcILunsMTcOGBSUvVi8hDMep04WKplshEgeLKr9ELdg5ImuEjouEV95%2BlfrFqICSkwa6nkPWMLwVFkaLElzjU58L/x7lnr27LKmgxLiht%2B%2BTicvo6X6/v%2B%2Bvr2eb70MxC6agWbjqJLfxf9IH/bw0DMPOVobB5gE/0t774BctAAzC8BAAA%3D
+&timestamp=1513133413048
+&nonce=554687
+&signature=b2b42a1d80dc59fe8c3b9327c1283fa56770d3ec
+
+
+
+https://engine.lvehaisen.com/index/activity?
+appKey=hZmYczUX7EBYtjjhc4723G9nrWB
+&adslotId=5847
+&md=H4sIAAAAAAAAAFXPQW7CMBAF0KtUXiPLLcQ07HqMriJjD3SE40G2kwghdpwBbtHCoivu09JbdFJaqVn%2B568Zz1ZgDShm4lFrXU7VuCinRVFOxEigWxgxC433IxEyVzpcILunsMTcOGBSUvVi8hDMep04WKplshEgeLKr9ELdg5ImuEjouEV95%2BlfrFqICSkwa6nkPWMLwVFkaLElzjU58L/x7lnr27LKmgxLiht%2B%2BTicvo6X6/v%2B%2Bvr2eb70MxC6agWbjqJLfxf9IH/bw0DMPOVobB5gE/0t774BctAAzC8BAAA%3D
+&timestamp=1513134008263
+&nonce=005921
+&signature=e4daba25eb471316ea8f8d48c937503e8fdcc9ed
+
+
+http://pushnew.tianrow.com/spush/s2s.gif?pid=8c3e3538&ptype=1&ip=168.12.1.139&ua=Mozilla/5.0+(Linux%3B+Android+6.0%3BM5+Build/MRA58K%3B+wv)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Version/4.0+Chrome/44.0.2403.140+Mobile+Safari/537.36&uid=862484035593421&app_version=1.0.0&v=2.0.0&device=%7B%22openudid%22:null,%22androidid%22:%223684daa8487cf202%22,%22imei%22:%22862484035593421%22,%22idfa%22:%22%22,%22mac%22:%2228:fa:a0:39:79:cc%22,%22os%22:1,%22os_v%22:%226.0%22,%22dev%22:%22Meizu%22,%22md%22:%22M5%22,%22network%22:1,%22operator%22:1,%22width%22:720,%22height%22:1280%7D&gps=%7B%22lat%22:%2222.544170379638672%22,%22lng%22:%22113.94439697265625%22,%22t%22:1497521504428%7D
+
+http://pushnew.tianrow.com/spush/s2s.gif?pid=8c3e3538&ptype=1&ip=168.12.1.139&ua=Mozilla/5.0+(Linux%3B+Android+6.0%3BM5+Build/MRA58K%3B+wv)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Version/4.0+Chrome/44.0.2403.140+Mobile+Safari/537.36&uid=862484035593421&app_version=1.0.0&v=2.0.0&device=%7B%22openudid%22:null,%22androidid%22:%223684daa8487cf202%22,%22imei%22:%22862484035593421%22,%22idfa%22:%22%22,%22mac%22:%2228:fa:a0:39:79:cc%22,%22os%22:1,%22os_v%22:%226.0%22,%22dev%22:%22Meizu%22,%22md%22:%22M5%22,%22network%22:1,%22operator%22:1,%22width%22:720,%22height%22:1280%7D&gps=%7B%22lat%22:%2222.544170379638672%22,%22lng%22:%22113.94439697265625%22,%22t%22:1497521504428%7D
+http://pushnew.tianrow.com/spush/s2s.gif?pid=8c3e3538&ptype=1&ip=116.24.65.113&ua=Mozilla/5.0+(Linux%3B+U%3B+Android+4.2.2%3B+zh-cn%3B+NX403A+Build/JDQ39)+AppleWebKit/534.30+(KHTML,+like+Gecko)+Version/4.0+Mobile+Safari/534.30&uid=864230036377784&app_version=1.0.0&v=2.0.0&device=%7B%22openudid%22:null,%22androidid%22:%22d1cd48fa22550f80%22,%22imei%22:%22864230036377784%22,%22idfa%22:%22%22,%22mac%22:%2298:6c:f5:26:6a:d3%22,%22os%22:1,%22os_v%22:%224.2.2%22,%22dev%22:%22nubia%22,%22md%22:%22NX403A%22,%22network%22:1,%22operator%22:1,%22width%22:720,%22height%22:1280%7D&gps=%7B%22lat%22:%22%22,%22lng%22:%22%22,%22t%22:0%7D
+
+
+/home/hamlt/myWork/adx-projects/adx-adapter/core/src/main/scala/com/chinamobiad/adx/adapter/adapter/s2s/tianluo/TianLuoRequest.scala
+
+
+     #  email_delivery:
+     #    delivery_method: :smtp
+     #    smtp_settings:
+     #      enable_starttls_auto: true
+     #      address: "smtp.gmail.com"
+     #      port: 587
+     #      domain: "smtp.gmail.com" # 'your.domain.com' for GoogleApps
+     #      authentication: :plain
+     #      user_name: "your_email@gmail.com"
+     #      password: "your_password"
+
+
+
+
