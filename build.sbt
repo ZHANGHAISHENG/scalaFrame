@@ -36,6 +36,11 @@ libraryDependencies ++= Seq(
   , "com.typesafe.slick"           %% "slick-hikaricp"             % slickV
   , "com.typesafe.slick"           %% "slick-codegen"              % slickV
   , "org.postgresql"               %  "postgresql"                 % "42.1.4"
-
+  , "org.scalatest"                %% "scalatest"                  % "3.0.4"
+  , "org.specs2"                   %% "specs2-core"                % "4.0.2"        % "test"
+  , "com.typesafe.akka"            %% "akka-testkit"               % akkaV
+  , "com.h2database"               %  "h2"                         % "1.4.196"
+  , "com.typesafe.akka"            %% "akka-stream-testkit"        % akkaV
+  , "com.typesafe.akka"            %% "akka-http-testkit"          % akkaHttpV
 )
 

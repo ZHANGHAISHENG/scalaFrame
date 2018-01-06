@@ -45,17 +45,17 @@ object Start {
   }
 
   //添加
-  def create() = {
+  def create(dept: (Long, Int, String)) = {
     val action = DBIO.seq(
-      department += (0,3,"部门测试")
+      department += dept
     )
     Await.result(db.run(DBIO.seq(action.transactionally)), Duration.Inf)
   }
 
   //添加并返回
-  def createAndGet(): Option[(Long, Int, String)] = {
+  def createAndGet(dept: (Long, Int, String)): Option[(Long, Int, String)] = {
     val q = (department returning department.map(_.id))
-    val action = q += (0,2,"部门测试")
+    val action = q += dept
     println(q.insertStatement)
     val id: Long = Await.result(db.run(action.transactionally),Duration.Inf)
     val r: Option[(Long, Int, String)] = findById(id)
@@ -177,12 +177,22 @@ object Start {
     Await.result(selects,Duration.Inf)
   }
 
+  //使用sql查询
+  def selectSql() = {
+     val sql = sql"select * from department".as[(Long, Int, String)]
+     val selects = db.run(sql).map(_.foreach{
+       case (deptid, count, avg) =>
+         println("  " + deptid + "\t" + count + "\t" + avg)
+     })
+    Await.result(selects,Duration.Inf)
+  }
+
   def main(args: Array[String]): Unit = {
-    //create()
+    //create((0,3,"部门测试"))
 
     //println(findById(1))
 
-    //println(createAndGet())
+    println(createAndGet((0,2,"部门测试")))
 
     //println(createOrUpdate((7,4,"部门测试")))
 
@@ -198,7 +208,11 @@ object Start {
     //val u: (Long, Long, String, Int, Long, String, String, Long) = (0L,111L,"赵六",1,System.currentTimeMillis(),"1369384995","wx3",System.currentTimeMillis())
     //createUser(u)
 
-    query2()
+    //query2()
+
+    //selectSql()
+
+
 
   }
 }
