@@ -44,3 +44,9 @@ libraryDependencies ++= Seq(
   , "com.typesafe.akka"            %% "akka-http-testkit"          % akkaHttpV
 )
 
+coverageEnabled := true
+coverageFailOnMinimum := true
+coverageMinimum := 90
+coverageOutputCobertura := false
+coverageOutputXML := false
+

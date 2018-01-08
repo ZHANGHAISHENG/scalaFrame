@@ -1,6 +1,6 @@
 namespace java com.test.logger
 
-exception WriteExce {
+exception WriteException {
   string description
 }
 
