@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package com.chinamobiad.adx.idl;
+
+option optimize_for = SPEED;
+
+enum Bool {
+    False        = 0;
+    True         = 1;
+}
+
+enum Status {
+    Inactive = 0;
+    Active   = 1;
+}
+
+enum AuditStatus {
+    UnSubmitted = 0;
+    Dropped     = -2;
+    Refused     = -1;
+    Pending     = 1;
+    Passed      = 2;
+}
+// DSP 接入方式
+enum DspApiType {
+    UNKNOWN_DSP_API_TYPE = 0;
+    S2S                  = 1;
+    C2S                  = 2;
+}

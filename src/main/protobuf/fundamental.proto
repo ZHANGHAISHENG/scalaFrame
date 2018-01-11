@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package com.chinamobiad.adx.idl;
+
+option optimize_for = SPEED;
+
+message IntervalHour {
+    int32 start_at = 1;
+    int32 end_at   = 2;
+}
