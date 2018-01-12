@@ -192,7 +192,7 @@ object Start {
 
     //println(findById(1))
 
-    println(createAndGet((0,2,"部门测试")))
+    // println(createAndGet((0,2,"部门测试")))
 
     //println(createOrUpdate((7,4,"部门测试")))
 
@@ -210,7 +210,7 @@ object Start {
 
     //query2()
 
-    //selectSql()
+    selectSql()
 
 
 

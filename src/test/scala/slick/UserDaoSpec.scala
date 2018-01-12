@@ -1,11 +1,14 @@
 package slick
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
-class UserDaoSpec extends FlatSpec with Matchers{
-
-/*  "first test" in {
-     1 shouldEqual 1
-   }*/
+class UserDaoSpec extends WordSpecLike
+                  with BeforeAndAfterAll
+                  with Matchers {
+  
+  "first test" in {
+    val r = UserDao.findById(1)
+    r shouldEqual(1, "张三")
+  }
 
 }

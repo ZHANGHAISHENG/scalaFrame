@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.chinamobiad.adx.idl;
+
+option optimize_for = SPEED;
+
+import "enums.proto";
+import "fundamental.proto";
+
+message Placement {
+    string                id                           = 1;
+    int64                 pub_app_id                   = 2;
+    DspApiType            dsp_api_type                 = 5;
+    double                ecpm                         = 6;
+    Bool                  is_ag_app                    = 7;
+    int32                 dsp_code                     = 8;
+    repeated IntervalHour active_intervals_for_dsp     = 10;
+    map<string, string>   ext_data                     = 11;
+}
