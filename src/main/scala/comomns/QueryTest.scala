@@ -13,7 +13,7 @@ object QueryTest {
     .replaceAll("\\$\\{UP_Y}", "\\{{AG_UY_A}}")
 
   def main(args: Array[String]): Unit = {
-   /* val ext: List[(String, String)] = List(
+    val ext: List[(String, String)] = List(
       "adslotId" -> "111111"
       , "md" -> "2222222"
       , "timestamp" -> "333333"
@@ -30,13 +30,14 @@ object QueryTest {
     val url = Uri(baseUrl).withQuery(Query(q: _*)).toString()
 
     println("-------------------------------------------------------------------------------------------")
-    println(Uri(baseUrl).rawQueryString)
+    println(Uri(baseUrl).authority)
+    println(Uri(baseUrl).path)
     println(q)
     println(query)
 
     println(java.net.URLEncoder.encode("中", "utf-8"))
 
-    println(System.currentTimeMillis())*/
+    println(System.currentTimeMillis())
 
    val url2 = "http://www.baidu.com?a=${DOWN_X}".replaceAll("\\$\\{DOWN_X}", "\\{{AG_DX_A}}")
    println(url2)
