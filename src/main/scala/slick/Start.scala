@@ -1,8 +1,11 @@
 package slick
 
+import slick.Start.Department
+
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import slick.jdbc.PostgresProfile.api._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
@@ -177,6 +180,21 @@ object Start {
     Await.result(selects,Duration.Inf)
   }
 
+  def query3() = {
+    //val a = (x:(User,Rep.Some[Department]), y:Department) => if(x._2.map(_.id) == y.id) Rep.Some(true) else Rep.Some(false)
+    val q = for {
+      ((u, d),c) <- user joinLeft department on (_.deptid === _.id) joinLeft department on{ case((user,dept),d) => dept.map(_.id) === d.id }// _._2.map(_.id) === _.id
+    } yield (u,d,c)
+
+    println(q.result.statements.head)
+
+    val selects = db.run(q.result).map(_.foreach{
+      case (u,d,c) =>
+        println(u+"--"+d+"--"+c)
+    })
+    Await.result(selects,Duration.Inf)
+  }
+
   //使用sql查询
   def selectSql() = {
      val sql = sql"select * from department".as[(Long, Int, String)]
@@ -189,7 +207,7 @@ object Start {
 
   //批量处理
   def batchQuery(detps: List[(Long, Int, String)]) = {
-    //批量查询或更新，如果是更新返回None,否则返回id
+    //批量插入或更新，如果是更新返回None,否则返回id
     val qs = detps.map(x => (department returning department.map(_.id)).insertOrUpdate(x)) // 返回List(None, Some(261), Some(262))，如果是更新返回None,否则返回id
     val action = DBIO.sequence(qs) // DBIO.fold(a,0)((x, y) => x + y)
     val r = Await.result(db.run(action.transactionally), Duration.Inf)
@@ -235,8 +253,10 @@ object Start {
 
     //query2()
 
-    selectSql()
+    query3()
 
-    
+    //selectSql()
+
+
   }
 }
