@@ -5,7 +5,6 @@ import slick.Start.Department
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import slick.jdbc.PostgresProfile.api._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 

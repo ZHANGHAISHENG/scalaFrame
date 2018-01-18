@@ -2,7 +2,7 @@ package scala_pb
 
 import java.util.Base64
 
-import com.chinamobiad.adx.idl.{Bool, DspApiType, IntervalHour, Placement}
+//import com.chinamobiad.adx.idl.{Bool, DspApiType, IntervalHour, Placement}
 
 /**
   * pb 编译依赖python
@@ -11,7 +11,7 @@ object PBTest {
 
   def main(args: Array[String]): Unit = {
 
-    val p = Placement(id = "id1",
+    /*val p = Placement(id = "id1",
       pubAppId = 1,
       dspApiType = DspApiType.C2S,
       ecpm = 1.2,
@@ -26,7 +26,7 @@ object PBTest {
 
     val s = Base64.getEncoder.encodeToString(b)
     val p3 = Placement.parseFrom(Base64.getDecoder.decode(s))
-    println(p3)
+    println(p3)*/
   }
 
 }
