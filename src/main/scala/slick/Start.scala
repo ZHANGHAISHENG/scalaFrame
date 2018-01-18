@@ -187,14 +187,39 @@ object Start {
     Await.result(selects,Duration.Inf)
   }
 
+  //批量处理
+  def batchQuery(detps: List[(Long, Int, String)]) = {
+    //批量查询或更新，如果是更新返回None,否则返回id
+    val qs = detps.map(x => (department returning department.map(_.id)).insertOrUpdate(x)) // 返回List(None, Some(261), Some(262))，如果是更新返回None,否则返回id
+    val action = DBIO.sequence(qs) // DBIO.fold(a,0)((x, y) => x + y)
+    val r = Await.result(db.run(action.transactionally), Duration.Inf)
+
+    //合并id（有id直接从r取否则从detps取，即插入从返回结果取id，更新从原始传入参数取id）
+    val r2: Seq[(Long, Any)] = detps.map(_._1) zip r.map(_.getOrElse(None)) //List((213,None), (0,263), (0,264))
+    val r3: Seq[Long] = r2.map(x => if(x._2 == None) x._1.toLong else x._2.toString.toLong) // List(213, 265, 266)
+
+    //根据id重新查询
+    val action2 = department.filter(_.id inSetBind (r3))
+    val r4: Seq[(Long, Int, String)] = Await.result(db.run(action2.result),Duration.Inf) // Vector((213,1,部门测试111), (267,1,部门测试2), (268,1,部门测试11))
+
+    //结果封装成map返回
+    val r5 = r4.collect{
+      case (id, no, name) => (id , (id, no, name))
+    }.toMap
+    r5
+  }
+
   def main(args: Array[String]): Unit = {
+
+    //println(batchQuery(List((213,1,null),(0,11,"部门测试"),(0,12,"部门测试"))))
+
     //create((0,3,"部门测试"))
 
-    //println(findById(1))
+    //println(findById(213))
 
     // println(createAndGet((0,2,"部门测试")))
 
-    //println(createOrUpdate((7,4,"部门测试")))
+    // println(createOrUpdate((7,4,"部门测试")))
 
     //println(updateById(1,(1,"部门1")))
 
@@ -212,7 +237,6 @@ object Start {
 
     selectSql()
 
-
-
+    
   }
 }
