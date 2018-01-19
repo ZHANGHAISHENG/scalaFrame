@@ -141,6 +141,7 @@ object Start {
                     ).collect({case Some(criteria)  => criteria})
                       .reduceLeftOption(_ || _)
                       .getOrElse(true: Rep[Boolean])
+                    // 等效于：d.name === strOpt1 || d.name === strOpt2 || d.name === strOpt3 || d.name === strOpt4
                   }.withFilter{
                     _.no < 50
                   }.sortBy(_.no.desc.nullsFirst)
@@ -246,13 +247,13 @@ object Start {
 
     //findAll()
 
-    //query(1,2)
+    query(1,2)
     //val u: (Long, Long, String, Int, Long, String, String, Long) = (0L,111L,"赵六",1,System.currentTimeMillis(),"1369384995","wx3",System.currentTimeMillis())
     //createUser(u)
 
     //query2()
 
-    query3()
+   // query3()
 
     //selectSql()
 
