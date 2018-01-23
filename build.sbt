@@ -32,6 +32,7 @@ libraryDependencies ++= Seq(
   , "com.typesafe.akka"            %% "akka-http-core"             % akkaHttpV
   , "com.typesafe.akka"            %% "akka-http"                  % akkaHttpV
   , "com.typesafe.akka"            %% "akka-stream-kafka"          % "0.18"
+  , "com.typesafe.akka"            %% "akka-stream-kafka"          % "0.17"
   , "com.typesafe.slick"           %% "slick"                      % slickV
   , "com.typesafe.slick"           %% "slick-hikaricp"             % slickV
   , "com.typesafe.slick"           %% "slick-codegen"              % slickV
