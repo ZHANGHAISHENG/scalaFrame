@@ -70,7 +70,7 @@ object KafkaConsumer {
 
 
     // #consumerToProducerSink
-    Consumer.committableSource(consumerSettings, Subscriptions.topics("topic1"))
+    /*Consumer.committableSource(consumerSettings, Subscriptions.topics("topic1"))
       .map { msg =>
         println(s"topic1 -> topic2: $msg")
         ProducerMessage.Message(new ProducerRecord[Array[Byte], String](
@@ -78,12 +78,12 @@ object KafkaConsumer {
           msg.record.value
         ), msg.committableOffset)
       }
-      .runWith(Producer.commitableSink(producerSettings))
+      .runWith(Producer.commitableSink(producerSettings))*/
     // #consumerToProducerSink
 
     // #plainSource
-    /*val db = new DB
-    db.loadOffset().foreach { fromOffset =>
+    val db = new DB
+    /*db.loadOffset().foreach { fromOffset =>
       val partition = 0
       val subscription = Subscriptions.assignmentWithOffset(
         new TopicPartition("topic1", partition) -> fromOffset
@@ -94,6 +94,27 @@ object KafkaConsumer {
       // #plainSource
       terminateWhenDone(done)
     }*/
+
+
+    /*val done =
+      Consumer.committableSource(consumerSettings, Subscriptions.topics("topic1"))
+        .mapAsync(1) { msg =>
+          db.update(msg.record.value).map(_ => msg)
+        }
+        .mapAsync(1) { msg =>
+          msg.committableOffset.commitScaladsl()
+        }
+        .runWith(Sink.ignore)*/
+    val done =
+      Consumer.committableSource(consumerSettings, Subscriptions.topics("topic1"))
+        .mapAsync(1) { msg =>
+          db.update(msg.record.value).map(_ => msg.committableOffset)
+        }
+        .batch(max = 20, first => CommittableOffsetBatch.empty.updated(first)) { (batch, elem) =>
+          batch.updated(elem)
+        }
+        .mapAsync(3)(_.commitScaladsl())
+        .runWith(Sink.ignore)
 
   }
 }
