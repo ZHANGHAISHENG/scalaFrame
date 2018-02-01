@@ -11,6 +11,7 @@ val scroogeV = "17.10.0"
 val akkaHttpV = "10.0.11"
 val akkaV = "2.5.7"
 val slickV = "3.2.1"
+val prometheusV = "0.1.0"
 
 libraryDependencies ++= Seq(
     "org.typelevel"                %% "cats-core"                  % catsV
@@ -33,6 +34,10 @@ libraryDependencies ++= Seq(
   , "com.typesafe.akka"            %% "akka-http"                  % akkaHttpV
   , "com.typesafe.akka"            %% "akka-stream-kafka"          % "0.18"
   , "com.typesafe.akka"            %% "akka-stream-kafka"          % "0.17"
+  , "io.prometheus"                %  "simpleclient"               % prometheusV
+  , "io.prometheus"                %  "simpleclient_hotspot"       % prometheusV
+  , "io.prometheus"                %  "simpleclient_common"        % prometheusV
+  , "io.prometheus"                %  "simpleclient_pushgateway"   % prometheusV
   , "com.typesafe.slick"           %% "slick"                      % slickV
   , "com.typesafe.slick"           %% "slick-hikaricp"             % slickV
   , "com.typesafe.slick"           %% "slick-codegen"              % slickV

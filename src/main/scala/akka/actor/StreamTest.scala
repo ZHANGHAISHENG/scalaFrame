@@ -23,15 +23,7 @@ object StreamTest {
       case _ =>println("fail"); Future.successful(User(0,"ww"))
     }
 
-    val tickInterval: FiniteDuration = 1000.milliseconds
-    Source.tick(0.seconds, tickInterval, ())
-      .mapAsync(1) { _ => Future.successful(User(1,"z")) }
-      .withAttributes(ActorAttributes.supervisionStrategy(decider))
-      .mapAsync(1){x => println(x.name); Future.successful(x.copy(name = x.name+"!"))}
-      .to(Sink.ignore)
-      .run()
-
-    val source = Source
+    val source: SourceQueueWithComplete[User] = Source
       .queue[User](bufferSize, overflowStrategy)
       .map(x => x.copy(name = x.name+"!"))
       .via(flow)

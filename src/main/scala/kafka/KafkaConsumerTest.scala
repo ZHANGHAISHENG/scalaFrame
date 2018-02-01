@@ -18,7 +18,7 @@ import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 import java.util.concurrent.atomic.AtomicLong
 
-import kafka.KafkaProducer.system
+import kafka.KafkaProducerTest.system
 
 // #db
 class DB {

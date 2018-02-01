@@ -11,10 +11,6 @@ object StreamTest2 {
   implicit def mt: Materializer = ActorMaterializer()
   implicit def ec: ExecutionContext = actorSystem.dispatcher
 
-  val bufferSize: Int = 1000
-  val overflowStrategy: OverflowStrategy = akka.stream.OverflowStrategy.backpressure
-  val parallel: Int = 20
-
   protected val decider: Supervision.Decider = {
     case NonFatal(e) =>
       e.printStackTrace()
@@ -27,7 +23,7 @@ object StreamTest2 {
     */
   def main(args: Array[String]): Unit = {
     val tickInterval: FiniteDuration = 1000.milliseconds
-    Source.tick(0.seconds, tickInterval, ())
+    val source: Cancellable =  Source.tick(0.seconds, tickInterval, ())
       .mapAsync(1) { _ => Future.successful(User(1,"zhs")) }
       .withAttributes(ActorAttributes.supervisionStrategy(decider))
       .mapAsync(1){x => println(x.name+"!"); Future.successful(x.copy(name = x.name+"!"))}

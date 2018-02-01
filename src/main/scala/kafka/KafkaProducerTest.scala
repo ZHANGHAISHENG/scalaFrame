@@ -94,7 +94,7 @@ object ProducerFlowExample extends ProducerExample {
 }
 */
 
-object KafkaProducer {
+object KafkaProducerTest {
   val system = ActorSystem("example")
   implicit val ec = system.dispatcher
   implicit val materializer = ActorMaterializer.create(system)
