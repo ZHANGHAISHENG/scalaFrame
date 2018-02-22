@@ -18,6 +18,7 @@ object AsyncQueue {
       case t:User =>println("success");sender() ! t
       case _ =>println("fail");  sender() ! User(0,"ww")
     }
+    
   }
   private[this] def makeWork(): ActorRef = actorSystem.actorOf(Props(classOf[Worker]))
   private[this] lazy val workers: Vector[ActorRef] = Vector.fill(parallel)(makeWork())
@@ -27,11 +28,11 @@ object AsyncQueue {
 
   def main(args: Array[String]): Unit = {
     pushToActor1(User(1,"zhs"))
-    val r: Future[User] = pushToActor2(User(1,"zhs"))
+    /*val r: Future[User] = pushToActor2(User(1,"zhs"))
     r.onComplete{
       case Success(u) => println(u)
       case e => println(e)
-    }
+    }*/
   }
 
 }
