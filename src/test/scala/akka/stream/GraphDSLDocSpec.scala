@@ -14,12 +14,46 @@ class GraphDSLDocSpec extends AkkaSpec {
 
   implicit val materializer = ActorMaterializer()
 
+  "my test" in {
+    //format: OFF
+    //#simple-graph-dsl
+    val g = RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
+      import GraphDSL.Implicits._
+      val in = Source(1 to 6)
+      val out = Sink.foreach(println)
+
+      val unzipWith: FanOutShape2[Int, Int, Int] = builder.add(UnzipWith[Int,Int,Int]((n: Int) => (n, n)))
+      in ~> unzipWith.in
+      unzipWith.out0  ~> out
+      unzipWith.out1 ~> out
+
+      val unzip = builder.add(Unzip[Int, String]())
+      Source(List((1 , "a"), 2 → "b", 3 → "c")) ~> unzip.in
+      unzip.out0 ~> out
+      unzip.out1 ~> out
+
+      val bcast2 = builder.add(Broadcast[Int](2)) //1个输入输出 2 次
+      in ~> bcast2.in
+      bcast2.out(0) ~> Sink.foreach(println)
+      bcast2.out(1) ~> Sink.foreach(println)
+
+      //val merge2 = builder.add(Merge[Int](2))
+      val balance = builder.add(Balance[Int](2)) //1个输入输出 1 次（选择其中一条路线）
+      in ~> balance  ~> out
+            balance  ~> out
+
+      ClosedShape
+    })
+    g.run()
+  }
+
+  
   "build simple graph" in {
     //format: OFF
     //#simple-graph-dsl
     val g = RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
       import GraphDSL.Implicits._
-      val in = Source(1 to 10)
+      val in = Source(1 to 2)
       val out = Sink.ignore
 
       val bcast = builder.add(Broadcast[Int](2))
