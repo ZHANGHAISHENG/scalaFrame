@@ -1,20 +1,20 @@
 package akka.stream
 
-import akka.NotUsed
-import akka.stream.scaladsl._
+import akka.stream.scaladsl.{Flow, _}
 import akka.testkit.AkkaSpec
-
 import scala.collection.immutable
-import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-
+import akka.NotUsed
+import akka.stream.testkit.TestSubscriber.ManualProbe
+import akka.stream.testkit.TestSubscriber
+import scala.concurrent.duration._
 class GraphDSLDocSpec extends AkkaSpec {
 
   implicit val ec = system.dispatcher
 
   implicit val materializer = ActorMaterializer()
 
-  "my test" in {
+  "Fan-out Test" in {
     //format: OFF
     //#simple-graph-dsl
     val g = RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
@@ -25,17 +25,17 @@ class GraphDSLDocSpec extends AkkaSpec {
       val unzipWith: FanOutShape2[Int, Int, Int] = builder.add(UnzipWith[Int,Int,Int]((n: Int) => (n, n)))
       in ~> unzipWith.in
       unzipWith.out0  ~> out
-      unzipWith.out1 ~> out
+      unzipWith.out1  ~> out
 
       val unzip = builder.add(Unzip[Int, String]())
       Source(List((1 , "a"), 2 → "b", 3 → "c")) ~> unzip.in
       unzip.out0 ~> out
       unzip.out1 ~> out
 
-      val bcast2 = builder.add(Broadcast[Int](2)) //1个输入输出 2 次
-      in ~> bcast2.in
-      bcast2.out(0) ~> Sink.foreach(println)
-      bcast2.out(1) ~> Sink.foreach(println)
+      val bcast = builder.add(Broadcast[Int](2)) //1个输入输出 2 次
+      in ~> bcast.in
+      bcast.out(0) ~> Sink.foreach(println)
+      bcast.out(1) ~> Sink.foreach(println)
 
       //val merge2 = builder.add(Merge[Int](2))
       val balance = builder.add(Balance[Int](2)) //1个输入输出 1 次（选择其中一条路线）
@@ -47,7 +47,77 @@ class GraphDSLDocSpec extends AkkaSpec {
     g.run()
   }
 
-  
+  "Fan-In Test" in {
+    //format: OFF
+    //#simple-graph-dsl
+    val g = RunnableGraph.fromGraph(GraphDSL.create() { implicit b: GraphDSL.Builder[NotUsed] =>
+      import GraphDSL.Implicits._
+      val source1 = Source(0 to 3)
+      val source2 = Source(4 to 9)
+      val out = Sink.foreach(println)
+
+     /* val m1 = b.add(Merge[Int](2))
+      source1 ~> m1.in(0)
+      source2 ~> m1.in(1)
+      m1.out ~> Flow[Int].map(_ + 1) ~> out //输出1 ~ 10*/
+
+     /* val zip = b.add(Zip[Int, String]())
+      Source(1 to 4) ~> zip.in0
+      Source(List("A", "B", "C", "D", "E", "F")) ~> zip.in1
+      zip.out ~> out // 输出 （1，A）...(5,D)*/
+
+      /*val zipWith = b.add(ZipWith[Int, Int, Int]((_: Int) + (_: Int)))
+      Source(1 to 4) ~> zipWith.in0
+      Source(2 to 10) ~> zipWith.in1
+      zipWith.out ~> out // 输出： 1 + 2， 3 + 4, ...., 4 + 5*/
+
+     /* val numElements = 10
+      val preferred = Source(Stream.fill(numElements)(1))
+      val aux1 = Source(Stream.fill(numElements)(2))
+      val aux2 = Source(Stream.fill(numElements)(3))
+      val mergeF = b.add(MergePreferred[Int](2))
+      mergeF.out.grouped(numElements) ~> out
+      preferred ~> mergeF.preferred  //同时进入时，优先输出preferred中的数字
+      aux1 ~> mergeF.in(0)
+      aux2 ~> mergeF.in(1)*/
+      /*
+      输出：
+      Vector(2, 3, 1, 1, 2, 3, 1, 1, 1, 1)
+      Vector(1, 1, 1, 1, 2, 3, 2, 3, 2, 3)
+      Vector(2, 3, 2, 3, 2, 3, 2, 3, 2, 3)
+      */
+
+     /* val s1 = Source(1 to 3)
+      val s2 = Source(4 to 6)
+      val s3 = Source(7 to 9)
+
+      val priorities = Seq(100, 10, 1) // 当 3个元素都准备输出时，按照概率输出
+      val mergeP = b.add(MergePrioritized[Int](priorities))
+      val delayFirst = b.add(Flow[Int].initialDelay(50.millis))
+      s1 ~> mergeP.in(0)
+      s2 ~> mergeP.in(1)
+      s3 ~> mergeP.in(2)
+      mergeP.out  ~> delayFirst ~> out*/
+
+      val concat1 = b add Concat[Int]()
+      val concat2 = b add Concat[Int]()
+      Source(List.empty[Int]) ~> concat1.in(0)
+      Source(1 to 4) ~> concat1.in(1)
+
+      concat1.out ~> concat2.in(0)
+      Source(5 to 10) ~> concat2.in(1)
+
+      concat2.out ~> out  //依次输出1 ~ 10
+
+      ClosedShape
+    })
+    g.run()
+    Thread.sleep(2000)
+  }
+
+
+
+
   "build simple graph" in {
     //format: OFF
     //#simple-graph-dsl
@@ -120,7 +190,6 @@ class GraphDSLDocSpec extends AkkaSpec {
     Await.result(topFuture, 300.millis) shouldEqual 2
     Await.result(bottomFuture, 300.millis) shouldEqual 2
   }
-
   "building a reusable component" in {
 
     //#graph-dsl-components-shape
@@ -150,9 +219,7 @@ class GraphDSLDocSpec extends AkkaSpec {
 
     //#graph-dsl-components-create
     object PriorityWorkerPool {
-      def apply[In, Out](
-                          worker:      Flow[In, Out, Any],
-                          workerCount: Int): Graph[PriorityWorkerPoolShape[In, Out], NotUsed] = {
+      def apply[In, Out](worker:  Flow[In, Out, Any], workerCount: Int): Graph[PriorityWorkerPoolShape[In, Out], NotUsed] = {
 
         GraphDSL.create() { implicit b ⇒
           import GraphDSL.Implicits._
@@ -183,7 +250,7 @@ class GraphDSLDocSpec extends AkkaSpec {
     }
     //#graph-dsl-components-create
 
-    def println(s: Any): Unit = ()
+    //def println(s: Any): Unit = ()
 
     //#graph-dsl-components-use
     val worker1 = Flow[String].map("step 1 " + _)
@@ -193,15 +260,15 @@ class GraphDSLDocSpec extends AkkaSpec {
       import GraphDSL.Implicits._
 
       val priorityPool1 = b.add(PriorityWorkerPool(worker1, 4))
-      val priorityPool2 = b.add(PriorityWorkerPool(worker2, 2))
+      //val priorityPool2 = b.add(PriorityWorkerPool(worker2, 2))
 
-      Source(1 to 100).map("job: " + _) ~> priorityPool1.jobsIn
-      Source(1 to 100).map("priority job: " + _) ~> priorityPool1.priorityJobsIn
+      Source(1 to 2).map("job: " + _) ~> priorityPool1.jobsIn
+      Source(1 to 2).map("priority job: " + _) ~> priorityPool1.priorityJobsIn
 
-      priorityPool1.resultsOut ~> priorityPool2.jobsIn
-      Source(1 to 100).map("one-step, priority " + _) ~> priorityPool2.priorityJobsIn
+      //priorityPool1.resultsOut ~> priorityPool2.jobsIn
+      //Source(1 to 10).map("one-step, priority " + _) ~> priorityPool2.priorityJobsIn
 
-      priorityPool2.resultsOut ~> Sink.foreach(println)
+     // priorityPool2.resultsOut ~> Sink.foreach(println)
       ClosedShape
     }).run()
     //#graph-dsl-components-use
