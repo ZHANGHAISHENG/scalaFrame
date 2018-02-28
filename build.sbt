@@ -48,7 +48,9 @@ libraryDependencies ++= Seq(
   , "com.h2database"               %  "h2"                         % "1.4.196"
   , "com.typesafe.akka"            %% "akka-stream-testkit"        % akkaV
   , "com.typesafe.akka"            %% "akka-http-testkit"          % akkaHttpV
-  , "com.typesafe.akka" %% "akka-testkit" % "2.5.9"
+  , "com.typesafe.akka"            %% "akka-testkit"               % "2.5.9"
+  , "com.aerospike"                %  "aerospike-client"           % "4.0.7"
+  , "org.bouncycastle"             %  "bcprov-jdk15on"             % "1.59"
 )
 
 coverageEnabled := true
