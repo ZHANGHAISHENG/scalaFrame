@@ -247,7 +247,7 @@ object Start {
 
     //findAll()
 
-    query(1,2)
+    //query(1,2)
     //val u: (Long, Long, String, Int, Long, String, String, Long) = (0L,111L,"赵六",1,System.currentTimeMillis(),"1369384995","wx3",System.currentTimeMillis())
     //createUser(u)
 
@@ -256,6 +256,12 @@ object Start {
    // query3()
 
     //selectSql()
+
+   /* val q = for{a <- department
+                b <- user.filter(_.deptid === a.id)
+            } yield b
+    println(q.result.statements)*/
+
 
 
   }

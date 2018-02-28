@@ -1,7 +1,7 @@
 package kafka
 
 //object myObj extends ObjectAndByte[User]
-trait ObjectAndByte[T] {
+trait Converter[T] {
   import java.io.ByteArrayInputStream
   import java.io.ByteArrayOutputStream
   import java.io.IOException
