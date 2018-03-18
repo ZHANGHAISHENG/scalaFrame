@@ -14,7 +14,7 @@ import akka.stream.{ActorAttributes, ActorMaterializer, Materializer, Supervisio
 import com.typesafe.config.Config
 import org.apache.kafka.common.serialization.{ByteArrayDeserializer, StringDeserializer}
 
-object KafkaConsumerTest1 extends ObjectAndByte[User] {
+object KafkaConsumerTest1 extends Converter[User] {
 
 
   implicit val system: ActorSystem = ActorSystem("adx-edge-" + java.util.UUID.randomUUID().toString.toLowerCase)

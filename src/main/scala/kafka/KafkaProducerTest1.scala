@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 case class User(id: String,name: String)
 
-object KafkaProducerTest1 extends ObjectAndByte[User] {
+object KafkaProducerTest1 extends Converter[User] {
   implicit def actorSystem: ActorSystem = ActorSystem("adx-edge-" + java.util.UUID.randomUUID().toString.toLowerCase)
   implicit def mt: Materializer = ActorMaterializer()
   implicit def ec: ExecutionContext = actorSystem.dispatcher
