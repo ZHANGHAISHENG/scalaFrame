@@ -34,6 +34,8 @@ object TwitterStreamQuickstartDocSpec {
   val akkaTag = Hashtag("#akka")
   //#model
 
+
+
   //#fiddle_code
 
   abstract class TweetSourceDecl {
@@ -81,6 +83,8 @@ class TwitterStreamQuickstartDocSpec extends AkkaSpec {
 
   implicit val materializer = ActorMaterializer()
 
+
+
   "filter and map" in {
     //#first-sample
 
@@ -110,6 +114,7 @@ class TwitterStreamQuickstartDocSpec extends AkkaSpec {
     authors.runForeach(println)
     //#authors-foreach-println
   }
+
 
   "mapConcat hashtags" in {
     //#hashtags-mapConcat

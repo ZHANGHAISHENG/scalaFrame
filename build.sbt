@@ -49,6 +49,7 @@ libraryDependencies ++= Seq(
   , "com.typesafe.akka"            %% "akka-stream-testkit"        % akkaV
   , "com.typesafe.akka"            %% "akka-http-testkit"          % akkaHttpV
   , "com.typesafe.akka" %% "akka-testkit" % "2.5.9"
+  , "com.github.tminglei" %% "slick-pg" % "0.16.0"
 )
 
 coverageEnabled := true

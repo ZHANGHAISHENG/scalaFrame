@@ -1,6 +1,5 @@
 package kafka
 
-
 import akka.actor.ActorSystem
 import akka.kafka.ProducerMessage
 import akka.kafka.ProducerSettings
@@ -15,7 +14,6 @@ import scala.concurrent.Future
 import akka.Done
 import scala.util.{Failure, Success}
 
-/*
 trait ProducerExample {
   val system = ActorSystem("example")
 
@@ -46,10 +44,12 @@ object PlainSinkExample extends ProducerExample {
     val done = Source(1 to 100)
       .map(_.toString)
       .map { elem =>
+        println(elem)
         new ProducerRecord[Array[Byte], String]("topic1", elem)
       }
       .runWith(Producer.plainSink(producerSettings))
     // #plainSink
+
     terminateWhenDone(done)
   }
 }
@@ -64,6 +64,7 @@ object PlainSinkWithProducerExample extends ProducerExample {
       }
       .runWith(Producer.plainSink(producerSettings, kafkaProducer))
     // #plainSinkWithProducer
+
     terminateWhenDone(done)
   }
 }
@@ -89,38 +90,6 @@ object ProducerFlowExample extends ProducerExample {
       .runWith(Sink.ignore)
     // #flow
 
-    terminateWhenDone(done)
-  }
-}
-*/
-
-object KafkaProducerTest {
-  val system = ActorSystem("example")
-  implicit val ec = system.dispatcher
-  implicit val materializer = ActorMaterializer.create(system)
-
-  def terminateWhenDone(result: Future[Done]): Unit = {
-    result.onComplete {
-      case Failure(e) =>
-        system.log.error(e, e.getMessage)
-        system.terminate()
-      case Success(_) => system.terminate()
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    // #producer
-    // #settings
-    val producerSettings = ProducerSettings(system, new ByteArraySerializer, new StringSerializer)
-                           .withBootstrapServers("localhost:9092")
-    // #plainSink
-    val done = Source(1 to 100)
-      .map(_.toString)
-      .map { elem =>
-        new ProducerRecord[Array[Byte], String]("topic1", elem)
-      }
-      .runWith(Producer.plainSink(producerSettings))
-    // #plainSink
     terminateWhenDone(done)
   }
 }

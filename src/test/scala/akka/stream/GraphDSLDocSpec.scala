@@ -56,6 +56,7 @@ class GraphDSLDocSpec extends AkkaSpec {
       val source2 = Source(4 to 9)
       val out = Sink.foreach(println)
 
+
      /* val m1 = b.add(Merge[Int](2))
       source1 ~> m1.in(0)
       source2 ~> m1.in(1)
