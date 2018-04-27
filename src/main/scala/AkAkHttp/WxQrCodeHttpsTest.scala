@@ -49,8 +49,8 @@ object WxQrCodeHttpsTest {
 
   private[this] def getImgBytes(token: String): Future[Option[Array[Byte]]] = {
     val url = s"https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=$token"
-    val entity = HttpEntity(string = "{\"path\": \"pages/index?query=1\", \"width\": 430}")
-    val req = HttpRequest(uri = url, method = HttpMethods.POST, entity = entity, headers = List(RawHeader("Content-Type","application/json")))
+    val entity = HttpEntity(string = "{\"path\": \"pages/index?query=1\", \"width\": 430}", contentType = ContentTypes.`application/json`)
+    val req = HttpRequest(uri = url, method = HttpMethods.POST, entity = entity)
     val responseFuture: Future[HttpResponse] = Http().singleRequest(req)
     responseFuture.flatMap {
       case res: HttpResponse if res.status == StatusCodes.OK =>
