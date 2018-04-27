@@ -74,7 +74,7 @@ class GraphsTest extends AkkaSpec {
       Source(2 to 10) ~> zipWith.in1
       zipWith.out ~> out // 输出： 1 + 2， 3 + 4, ...., 4 + 5*/
 
-      /* val numElements = 10
+       val numElements = 10
        val preferred = Source(Stream.fill(numElements)(1))
        val aux1 = Source(Stream.fill(numElements)(2))
        val aux2 = Source(Stream.fill(numElements)(3))
@@ -82,7 +82,7 @@ class GraphsTest extends AkkaSpec {
        mergeF.out.grouped(numElements) ~> out
        preferred ~> mergeF.preferred  //同时进入时，优先输出preferred中的数字
        aux1 ~> mergeF.in(0)
-       aux2 ~> mergeF.in(1)*/
+       aux2 ~> mergeF.in(1)
       /*
       输出：
       Vector(2, 3, 1, 1, 2, 3, 1, 1, 1, 1)

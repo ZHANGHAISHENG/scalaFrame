@@ -8,6 +8,7 @@ import akka.stream.actor.{ActorSubscriber, MaxInFlightRequestStrategy}
 import akka.stream.scaladsl.{Sink, Source}
 
 /**
+  * 将被弃用
   * Akka Streams: Integrating with Actors
   * 参考：http://www.moye.me/2016/09/10/akka-streams_integrating-actors/
   */
