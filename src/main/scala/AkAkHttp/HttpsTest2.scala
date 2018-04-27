@@ -12,7 +12,7 @@ import scala.concurrent.Future
 import io.circe.parser._
 import io.circe.generic.auto._
 
-object HttpsTest2 {
+object WxQrCodeHttpsTest {
   val appid = "wxa392f9af221825c3"
   val secret = "411a8fc21cae8b8834254adc19be896a"
   implicit val system = ActorSystem()
@@ -49,7 +49,6 @@ object HttpsTest2 {
 
   private[this] def getImgBytes(token: String): Future[Option[Array[Byte]]] = {
     val url = s"https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=$token"
-    println(url)
     val entity = HttpEntity(string = "{\"path\": \"pages/index?query=1\", \"width\": 430}")
     val req = HttpRequest(uri = url, method = HttpMethods.POST, entity = entity, headers = List(RawHeader("Content-Type","application/json")))
     val responseFuture: Future[HttpResponse] = Http().singleRequest(req)

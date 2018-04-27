@@ -1,7 +1,5 @@
 package comomns
 
-import comomns.com.ag.game.quiz.thriftscala.User
-
 object Test1 {
 
   sealed trait ReqResult
@@ -28,10 +26,6 @@ object Test1 {
       case a: LoginResult => println(a.user)
       case x => println(x)
     }
-
-    val o:Object = User
-
-    
 
   }
 
