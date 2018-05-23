@@ -5,6 +5,8 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
 
+import scala.concurrent.Future
+
 final case class Author(handle: String)
 
 final case class Hashtag(name: String)
@@ -40,6 +42,18 @@ object QuickTest {
       .map(_.name.toUpperCase) // Convert all hashtags to upper case
       .runWith(Sink.foreach(println)) // Attach the Flow to a Sink that will finally print the hashtags
     // $FiddleDependency org.akka-js %%% akkajsactorstream % 1.2.5.1
+
+    Source(1 to 10000)
+    //.grouped(2)
+    // .mapAsync
+    .mapAsyncUnordered(10) { x =>
+      println(x)
+      Future.successful(x)
+    }.map{ x =>
+      println("x: " + x)
+      x
+    }.runWith(Sink.ignore)
+
   }
 
 }

@@ -14,6 +14,9 @@ import akka.stream.{ActorAttributes, ActorMaterializer, Materializer, Supervisio
 import com.typesafe.config.Config
 import org.apache.kafka.common.serialization.{ByteArrayDeserializer, StringDeserializer}
 
+/**
+  * 实用示例
+  */
 object KafkaConsumerTest1 extends Converter[User] {
 
 
