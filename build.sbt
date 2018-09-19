@@ -33,7 +33,6 @@ libraryDependencies ++= Seq(
   , "com.typesafe.akka"            %% "akka-http-core"             % akkaHttpV
   , "com.typesafe.akka"            %% "akka-http"                  % akkaHttpV
   , "com.typesafe.akka"            %% "akka-stream-kafka"          % "0.18"
-  , "com.typesafe.akka"            %% "akka-stream-kafka"          % "0.17"
   , "io.prometheus"                %  "simpleclient"               % prometheusV
   , "io.prometheus"                %  "simpleclient_hotspot"       % prometheusV
   , "io.prometheus"                %  "simpleclient_common"        % prometheusV
@@ -52,6 +51,8 @@ libraryDependencies ++= Seq(
   , "com.typesafe.akka"            %% "akka-testkit"               % "2.5.9"
   , "com.aerospike"                %  "aerospike-client"           % "4.0.7"
   , "org.bouncycastle"             %  "bcprov-jdk15on"             % "1.59"
+  , "com.zzcm"                     %  "surgesms"                   % "1.0.3"
+  , "org.slf4j"                    %  "log4j-over-slf4j"           % "1.7.25"
 )
 
 coverageEnabled := true

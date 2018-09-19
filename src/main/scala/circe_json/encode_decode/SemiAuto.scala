@@ -14,7 +14,7 @@ object SemiAuto {
     implicit val fooEncoder: Encoder[Foo] = deriveEncoder[Foo] //  或 deriveEncoder
     val j1 = Foo(100,"i m b",true).asJson
     println(j1)
-    println(j1.as[Foo])
+   // println(j1.as[Foo])
 
   }
 
