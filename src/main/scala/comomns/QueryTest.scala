@@ -29,26 +29,15 @@ object QueryTest {
 
     val url = Uri(baseUrl).withQuery(Query(q: _*)).toString()
 
+    println("url:" + url)
+
     println("-------------------------------------------------------------------------------------------")
     println(Uri(baseUrl).authority)
     println(Uri(baseUrl).path)
-    println(q)
-    println(query)
-
-    println(java.net.URLEncoder.encode("中", "utf-8"))
-
-    println(System.currentTimeMillis())
-
-   val url2 = "http://www.baidu.com?a=${DOWN_X}".replaceAll("\\$\\{DOWN_X}", "\\{{AG_DX_A}}")
-   println(url2)
+    println("q:"+q)
+    println("query:" + query)
 
   }
 
-  private[this] def vStrToInt(v: String):Int = {
-    Try(v.split("\\.")(0).toInt) match {
-      case Success(i) => i
-      case Failure(e) => 0
-    }
-  }
 
 }
