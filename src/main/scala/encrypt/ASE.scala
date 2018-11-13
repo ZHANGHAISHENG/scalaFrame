@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec
 object ASE extends App {
   // 加密
   @throws[Exception]
-  def Encrypt(sSrc: String, sKey: String): String = {
+  def encrypt(sSrc: String, sKey: String): String = {
     if (sKey == null) {
       System.out.print("Key为空null")
       return null
@@ -29,7 +29,7 @@ object ASE extends App {
 
   // 解密
   @throws[Exception]
-  def Decrypt(sSrc: String, sKey: String): String = try { // 判断Key是否正确
+  def decrypt(sSrc: String, sKey: String): String = try { // 判断Key是否正确
     if (sKey == null) {
       System.out.print("Key为空null")
       return null
@@ -62,8 +62,8 @@ object ASE extends App {
   // 需要加密的字串
   val cSrc = "adid=a10001&adtype=banner&width=100&height=300&os=0&osv=5.1.1&pkgname=co" + "m.yichi.mobads.test&appver=7.0&&devicetype=1&vendor=xiaomi&model=mix2&imei=8" + "67068020992938&mac=9C:99:A0:FF:E9:15&anid=eedbdb39f66910a4&sw=1440&sh=2" + "560&ip=192.168.1.200&ot=1&ct=1"
   System.out.println(cSrc)
-  val enString = Encrypt(cSrc, cKey)
+  val enString = encrypt(cSrc, cKey)
   System.out.println("加密后的字串是：" + enString)
-  val DeString = Decrypt(enString, cKey)
-  System.out.println("解密后的字串是：" + DeString)
+  val DeString = decrypt(enString, cKey)
+  System.out.println(DeString)
 }

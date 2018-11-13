@@ -1,7 +1,9 @@
 package comomns
 
+import java.nio.charset.Charset
+
 import akka.http.scaladsl.model.Uri
-import akka.http.scaladsl.model.Uri.Query
+import akka.http.scaladsl.model.Uri.{ParsingMode, Query}
 
 import scala.util.{Failure, Success, Try}
 
@@ -21,7 +23,7 @@ object QueryTest {
       , "signature" -> "中文"
     )
 
-    val baseUrl = "https://engine.lvehaisen.com/index/activity?appKey=hZmYczUX7EBYtjjhc4723G9nrWB"
+    val baseUrl = "https://engine.lvehaisen.com/index/activity?a=a&b=aa=="
 
     val query = Query(ext: _*)
 
@@ -29,13 +31,15 @@ object QueryTest {
 
     val url = Uri(baseUrl).withQuery(Query(q: _*)).toString()
 
-    println("url:" + url)
 
+
+    println(Uri(baseUrl).rawQueryString)
     println("-------------------------------------------------------------------------------------------")
     println(Uri(baseUrl).authority)
     println(Uri(baseUrl).path)
     println("q:"+q)
     println("query:" + query)
+    println(Query(q: _*))
 
   }
 
